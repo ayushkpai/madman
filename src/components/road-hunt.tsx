@@ -13,7 +13,6 @@ const DRAG = 4;
 const MAX_DAMAGE = 4;
 const ESCAPE_GAP = 140;
 const METERS_PER_UNIT = 8;
-const BEST_KEY = "madman-road-hunt-best";
 
 type Status = "ready" | "playing" | "paused" | "won" | "lost";
 type LossReason = "wrecked" | "escaped";
@@ -274,11 +273,6 @@ export default function RoadHunt() {
         if (currentBest === null || ms < currentBest) {
           bestRef.current = ms;
           setBestMs(ms);
-          try {
-            window.localStorage.setItem(BEST_KEY, String(ms));
-          } catch {
-            // Storage may be unavailable.
-          }
         }
         tone(392, 0.12, "triangle", 0.06);
         setTimeout(() => tone(523, 0.12, "triangle", 0.06), 110);
@@ -311,22 +305,6 @@ export default function RoadHunt() {
   const toggleMute = useCallback(() => {
     mutedRef.current = !mutedRef.current;
     setMuted(mutedRef.current);
-  }, []);
-
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(BEST_KEY);
-      if (stored) {
-        const value = Number(stored);
-        if (Number.isFinite(value) && value > 0) {
-          bestRef.current = value;
-          // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate persisted best time after mount
-          setBestMs(value);
-        }
-      }
-    } catch {
-      // Storage may be unavailable.
-    }
   }, []);
 
   useEffect(() => {
