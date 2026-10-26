@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Madman — Asylum Escape",
+  title: "Madman — Road Hunt",
   description:
-    "Collect three keys and escape the shifting asylum before the madman catches you.",
+    "You are the madman. Chase down a fleeing car through a sunlit highway before they lose you.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
